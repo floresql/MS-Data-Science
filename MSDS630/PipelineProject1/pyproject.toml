@@ -1,0 +1,16 @@
+[project]
+name = "pipelineproject1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.8,<3.14" 
+dependencies = [
+    "duckdb>=1.4.3",
+    "httpx>=0.28.1",
+    "marimo>=0.19.4",
+    "minio>=7.2.20",
+    "pandas>=3.0.1",
+    "polars>=1.38.1",
+    "requests>=2.32.5",
+    "sqlite3",
+]

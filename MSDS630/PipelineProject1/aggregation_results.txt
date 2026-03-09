@@ -1,0 +1,24 @@
+Total Sales by Month:
+ month month_name      amount
+     1    January 30591663.07
+     2   February 27618685.24
+     3      March 30578021.79
+     4      April 29577721.10
+     5        May 30567110.16
+     6       June 29613463.04
+     7       July 30579889.19
+     8     August 30583811.03
+     9  September 29586919.36
+    10    October 30560507.18
+    11   November 29587933.06
+    12   December 30574714.35
+
+Total Sales by Category:
+category      amount
+     C06 51603180.71
+     C04 51538062.93
+     C01 51504920.23
+     C03 51466001.05
+     C07 51371135.44
+     C02 51287714.87
+     C05 51249423.34

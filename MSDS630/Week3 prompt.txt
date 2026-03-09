@@ -1,0 +1,76 @@
+I need a python script to hit an api to perform a healthcheck, poll, fetch and commit. each of these should be their own method inside a class with a main function to run it all.
+
+poll, fetch, and commit need 
+api_key: parks_sk_xi_e0iMzpaZ98VuDZHRBpmP2XgJAC6L2Ebbyo9k6SJo 
+consumer_key:XGEqzURDhU4Tf8TTLts8blb_l--YM5gK
+
+the script should run a healthcheck first, if database status and refresh status are both ok, it can proceed to the fetch step. If not, the script should end.
+the poll method should return committed_event_id, which is the last id run in the commit step and if has_new_events is true it should return latest_event_id which is the max event id, and go on to the fetch step starting at committed_event_id +1
+the fetch method requires a start_event_id, which should be returned from the poll method and an end_event_id which should be start_event_id +10
+the commit method needs a event_id which should be returned from the fetch method and is start_event_id +10, or the last id fetched
+
+
+healthcheck method
+url:
+https://msde630.class-labs.com//healthcheck
+
+JSON response sample:
+{
+  "status": "warning",
+  "timestamp": "2026-02-13T02:32:24",
+  "checks": {
+    "api": {
+      "uptime_minutes": 41,
+      "status": "alert"
+    },
+    "database": {
+      "latency": 3,
+      "status": "OK"
+    },
+    "data_refresh": {
+      "age_minutes": 69,
+      "status": "ok"
+    }
+  }
+}
+
+
+poll method
+url: 
+https://msde630.class-labs.com/poll
+JSON response sample:
+{
+  "consumer_key": "XGEqzURDhU4Tf8TTLts8blb_l--YM5gK",
+  "committed_event_id": 5939,
+  "latest_event_id": 5939,
+  "has_new_events": false,
+  "start_event_id": null,
+  "end_event_id": null
+}
+
+
+fetch method
+url: 
+https://msde630.class-labs.com/fetch
+JSON response sample:
+  {
+      "visit_id": 5005,
+      "visitor_spending_id": 59666,
+      "visit_day_id": 15108,
+      "spending_category_id": 3,
+      "amount": 17
+    }
+
+
+commit method
+url: 
+https://msde630.class-labs.com/commit
+JSON response sample:
+{
+  "consumer_key": "string",
+  "committed_event_id": 0,
+  "latest_event_id": 0,
+  "has_new_events": true,
+  "start_event_id": 0,
+  "end_event_id": 0
+}

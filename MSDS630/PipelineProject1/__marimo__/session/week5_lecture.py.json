@@ -1,0 +1,397 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.19.4"
+  },
+  "cells": [
+    {
+      "id": "MJUe",
+      "code_hash": "13385b21406b81b82693871ad56474e0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"week-5-nosql-databases\">Week 5: NoSQL Databases</h1>\n<h2 id=\"agenda\">Agenda:</h2>\n<ul>\n<li>\n<span class=\"paragraph\"><strong>From Relational Databases to NoSQL Databases</strong></span>\n<ul>\n<li><em>the era of relational databses</em></li>\n<li><em>The 3V problem revisited</em></li>\n<li><em>NoSQL and the 3V problem</em></li>\n</ul>\n</li>\n<li><strong>CAP Theorem</strong></li>\n<li>\n<span class=\"paragraph\"><strong>NoSQL Database Families</strong></span>\n<ul>\n<li><em>document store databases</em></li>\n<li><em>key value databases</em></li>\n<li><em>wide column databases</em></li>\n<li><em>graph databases</em></li>\n<li><em>vector databases</em></li>\n</ul>\n</li>\n<li><strong>Closer Look at Document store Databases</strong></li>\n<li><strong>Closer Look at Vector Databases</strong></li>\n<li><strong>Database Demo</strong></li>\n<li><strong>Pipeline Project</strong></li>\n<li><strong>Week 5 assignment</strong></li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "38ddf3d458890bcf36657f79a74c1e50",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"from-relational-database-to-nosql-databases\">From Relational Database to NoSQL Databases</h2>\n<span class=\"paragraph\">Databases evolved from general purpose relational databases to special purpose NoSQL databases.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "c6ee8716ae9c01da45ac263a3a513415",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"the-era-of-relational-databases\">The Era of relational databases</h3>\n<span class=\"paragraph\">The era of relational databases refers to a time when relational databases reigned and were the de facto option for managing business data. This era lasted from the mid 1970's to the early 2000's.</span>\n<span class=\"paragraph\">Data in this era was characterized by two realities:</span>\n<ol>\n<li>Data was small</li>\n<li>Data was highly structured</li>\n</ol>\n<span class=\"paragraph\">Relational Databases were designed for this data reality.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "64759881594326edc802c1f9946070b0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"the-internet-and-the-changing-data-reality\">The Internet and the changing data reality</h3>\n<span class=\"paragraph\">In the early 1990's the internet stopped being the exclusive domain of academics and the government, and moved into the public and business arenas. By the mid 1990's, businesses started having an online presence and individual where beginning to create online content.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "785a03bc36b121d7c687cf2588c4abaf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"the-3v-problem-and-how-nosql-databases-addresses-it\">The 3V problem and how NoSQL Databases addresses it</h3>\n<span class=\"paragraph\">In terms of how data warehouses, data lakes, and data lakehouses addressed the 3V problem, the underlying database continued to be relational systems.</span>\n<span class=\"paragraph\">The 3V problem also led to a reconceptualization of databases themselves</span>\n<ol>\n<li>The volume problem</li>\n<li>the variety problem</li>\n<li>the velocity problem</li>\n</ol>\n<h4 id=\"the-nosql-response\"><strong>The NoSQL response</strong></h4>\n<ol>\n<li>Volume and Scalability</li>\n<li>Variety and Schema Rigidity</li>\n<li>Velocity, data management bottlenecks, and schema-on-write</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "2c1e165e25241fa437f992f0883b262b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"cap-theorem\">CAP Theorem</h2>\n<span class=\"paragraph\">Distributed systems present their own issues.</span>\n<span class=\"paragraph\">By design, in a distributed system that is continually receiving data, there will never be a situation in which all the nodes have the exact same data. Some nodes will always have data that others do not.</span>\n<span class=\"paragraph\"><strong>What happens when there is a read?</strong></span>\n<ol>\n<li>Primary only can serve reads</li>\n<li>Replication tracking - all nodes are available to serve reads.</li>\n</ol>\n<span class=\"paragraph\"><em>What happens when some nodes go down or there is a network issue that prevents some nodes from communicating with the rest of the system?</em>  The system must choose between maintaining <strong>consistency</strong> or maintaining <strong>availability.</strong></span>\n<ol>\n<li><strong>Consistency</strong> - Every read receives the most recent write or an error.</li>\n<li><strong>Availability</strong> - Every request receives a non-error response, regardless of whether it contains the latest data.</li>\n<li><strong>Partition Tolerance</strong> - The system survives network breaks between nodes.</li>\n</ol>\n<span class=\"paragraph\">CAP Theorem says that in distributed systems, only 2 of these can be simultaneously guaranteed.</span>\n<span class=\"paragraph\">In a distributed architecture, Partition Tolerance is non-negotiable, so the real fight is between wanting to guarantee Consistency or guarantee Availability. That is, in a distributed system, when a network partition occurs, you must choose between Consistency and Availability.</span>\n<span class=\"paragraph\">In systems that maintain consistency, will refuse some requests rather than risk returning outdated or conflicting data.\nIn systems that maintain availability, all requests will get a response, even though some requests might get outdated data.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "4a7311251141d616e22923d917988343",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"nosql-database-families\">NoSQL Database Families</h2>\n<span class=\"paragraph\">While relational databases served as general purpose databases, NoSQL databases where developed to solve specific problems. This eventually led to NoSQL databases being categorized into families with each family focused on resolving specific types of issues.</span>\n<ol>\n<li>Document Databases</li>\n<li>Key Value Databases</li>\n<li>Wide Column Databases</li>\n<li>Graph Databases</li>\n<li>Vector Databases</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "524b4674c990633d1fee59ddde913d7e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"deeper-dive-into-document-databases-mongodb\">Deeper Dive into document databases: mongoDB</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "5129afbd298e73df772841efe0c7433b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"documents-and-collections\">Documents and Collections</h3>\n<span class=\"paragraph\">In a document store database, data is organized around the concept of a document, which looks like a python dictionary</span>\n<span class=\"paragraph\">The following is an example document that shows the richness of data types that mongoDB understands.</span>\n<div class=\"language-carbon codehilite\"><pre><span></span><code><span class=\"p\">{</span>\n<span class=\"w\">  </span><span class=\"c1\">// 1. ObjectId: Primary Key</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;_id&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">ObjectId</span><span class=\"p\">(</span><span class=\"s\">&quot;507f1f77bcf86cd799439011&quot;</span><span class=\"p\">),</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 2. Strings: UTF-8 Text</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;name&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;Sarah Johnson&quot;</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;description&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;Senior Software Engineer with expertise in databases&quot;</span><span class=\"p\">,</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 3. Numeric Types (The &quot;Specific Problems&quot; types)</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;age&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">NumberInt</span><span class=\"p\">(</span><span class=\"mi\">28</span><span class=\"p\">),</span><span class=\"w\">                          </span><span class=\"c1\">// 32-bit Integer</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;userId&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">NumberLong</span><span class=\"p\">(</span><span class=\"s\">&quot;123456789012345&quot;</span><span class=\"p\">),</span><span class=\"w\">       </span><span class=\"c1\">// 64-bit Long</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;salary&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">85000.50</span><span class=\"p\">,</span><span class=\"w\">                             </span><span class=\"c1\">// Double (64-bit float)</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;accountBalance&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">NumberDecimal</span><span class=\"p\">(</span><span class=\"s\">&quot;999999.99&quot;</span><span class=\"p\">),</span><span class=\"w\">  </span><span class=\"c1\">// Decimal128 (High Precision)</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 4. Booleans &amp; Null</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;isActive&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"kc\">true</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;middleName&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">null</span><span class=\"p\">,</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 5. Date &amp; Time</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;createdAt&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">new</span><span class=\"w\"> </span><span class=\"nx\">Date</span><span class=\"p\">(</span><span class=\"s\">&quot;2024-02-12T10:30:00Z&quot;</span><span class=\"p\">),</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;lastLogin&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">ISODate</span><span class=\"p\">(</span><span class=\"s\">&quot;2024-02-12T08:15:30.123Z&quot;</span><span class=\"p\">),</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 6. Arrays (Lists)</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;skills&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"p\">[</span><span class=\"s\">&quot;JavaScript&quot;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">&quot;Python&quot;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">&quot;MongoDB&quot;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">&quot;Redis&quot;</span><span class=\"p\">],</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;matrix&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"p\">[[</span><span class=\"mi\">1</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"mi\">2</span><span class=\"p\">],</span><span class=\"w\"> </span><span class=\"p\">[</span><span class=\"mi\">3</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"mi\">4</span><span class=\"p\">]],</span><span class=\"w\">                    </span><span class=\"c1\">// Nested Array</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 7. Embedded Documents (The &quot;Cohesive&quot; part)</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;address&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">    </span><span class=\"s\">&quot;street&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;123 Main Street&quot;</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"s\">&quot;city&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;Austin&quot;</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"s\">&quot;coordinates&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"p\">{</span><span class=\"w\"> </span><span class=\"s\">&quot;lat&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">30.26</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">&quot;long&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"o\">-</span><span class=\"m m-Double\">97.74</span><span class=\"w\"> </span><span class=\"p\">}</span>\n<span class=\"w\">  </span><span class=\"p\">},</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 8. Array of Embedded Documents</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;projects&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"p\">[</span>\n<span class=\"w\">    </span><span class=\"p\">{</span><span class=\"w\"> </span><span class=\"s\">&quot;name&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;E-commerce&quot;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">&quot;status&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;completed&quot;</span><span class=\"w\"> </span><span class=\"p\">},</span>\n<span class=\"w\">    </span><span class=\"p\">{</span><span class=\"w\"> </span><span class=\"s\">&quot;name&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;Dashboard&quot;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">&quot;status&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s\">&quot;in-progress&quot;</span><span class=\"w\"> </span><span class=\"p\">}</span>\n<span class=\"w\">  </span><span class=\"p\">],</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 9. Binary Data &amp; Logic</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;profilePicture&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">BinData</span><span class=\"p\">(</span><span class=\"mi\">0</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">&quot;iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==&quot;</span><span class=\"p\">),</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;emailPattern&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"o\">/^</span><span class=\"p\">[</span><span class=\"nx\">a</span><span class=\"o\">-</span><span class=\"nx\">zA</span><span class=\"o\">-</span><span class=\"nx\">Z0</span><span class=\"o\">-</span><span class=\"mi\">9</span><span class=\"p\">.</span><span class=\"nx\">_</span><span class=\"o\">%+-</span><span class=\"p\">]</span><span class=\"o\">+</span><span class=\"err\">@</span><span class=\"p\">[</span><span class=\"nx\">a</span><span class=\"o\">-</span><span class=\"nx\">zA</span><span class=\"o\">-</span><span class=\"nx\">Z0</span><span class=\"o\">-</span><span class=\"mi\">9</span><span class=\"p\">.</span><span class=\"o\">-</span><span class=\"p\">]</span><span class=\"o\">+</span><span class=\"err\">\\</span><span class=\"p\">.[</span><span class=\"nx\">a</span><span class=\"o\">-</span><span class=\"nx\">zA</span><span class=\"o\">-</span><span class=\"nx\">Z</span><span class=\"p\">]{</span><span class=\"mi\">2</span><span class=\"p\">,}</span><span class=\"err\">$</span><span class=\"o\">/</span><span class=\"p\">,</span>\n\n<span class=\"w\">  </span><span class=\"c1\">// 10. JavaScript &amp; Internal Types</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;validateUser&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">function</span><span class=\"p\">()</span><span class=\"w\"> </span><span class=\"p\">{</span><span class=\"w\"> </span><span class=\"k\">return</span><span class=\"w\"> </span><span class=\"nx\">this</span><span class=\"p\">.</span><span class=\"nx\">isActive</span><span class=\"p\">;</span><span class=\"w\"> </span><span class=\"p\">},</span>\n<span class=\"w\">  </span><span class=\"s\">&quot;oplogTimestamp&quot;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">Timestamp</span><span class=\"p\">(</span><span class=\"mi\">1707732600</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"mi\">1</span><span class=\"p\">),</span>\n<span class=\"p\">}</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "a2938481ef2ffd783302306406fcaccc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"realistic-example\">realistic example</h3>\n<span class=\"paragraph\">In mongoDB and other document store databases, documents are organized into collections.</span>\n<span class=\"paragraph\">This is how a mongodb collection with two documents might display</span>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>[\n  {\n    &quot;_id&quot;: ObjectId(&quot;65f1a8c2e13a4a5b8d1c0001&quot;),\n    &quot;name&quot;: &quot;Sarah Johnson&quot;,\n    &quot;major&quot;: &quot;Data Engineering&quot;,\n    &quot;credits_earned&quot;: 45,\n    &quot;is_active&quot;: true\n   },\n   {\n    &quot;_id&quot;: ObjectId(&quot;65f1a8c2e13a4a5b8d1c0002&quot;),\n    &quot;name&quot;: &quot;David Miller&quot;,\n    &quot;major&quot;: &quot;Computer Science&quot;,\n    &quot;credits_earned&quot;: 12,\n    &quot;is_active&quot;: false\n   }\n]\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "cdf139a2bbb88f11bcac324959553901",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">In relational database format:</span>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">student_id</th>\n<th style=\"text-align: left;\">name</th>\n<th style=\"text-align: left;\">major</th>\n<th style=\"text-align: left;\">credits_earned</th>\n<th style=\"text-align: left;\">is_active</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>101</strong></td>\n<td style=\"text-align: left;\">Sarah Johnson</td>\n<td style=\"text-align: left;\">Data Engineering</td>\n<td style=\"text-align: left;\">45</td>\n<td style=\"text-align: left;\">true</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>102</strong></td>\n<td style=\"text-align: left;\">David Miller</td>\n<td style=\"text-align: left;\">Computer Science</td>\n<td style=\"text-align: left;\">12</td>\n<td style=\"text-align: left;\">false</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "f9826a39a97cec517aaddde01c5fe4a0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"more-complex-example-with-two-collections-show-how-they-are-related-in-this-example-we-connecting-the-books-by-reference-which-is-similar-to-using-primar-and-foreign-keys\">more complex example with two collections show how they are related. In this example we connecting the books by reference, which is similar to using primar and foreign keys</h3>\n<span class=\"paragraph\">Authors Collection\n   <div class=\"language-scdoc codehilite\"><pre><span></span><code>[\n  {\n    _id: ObjectId(&quot;65f300000000000000000001&quot;),\n    name: &quot;Agatha Christie&quot;,\n    birthYear: 1890,\n    nationality: &quot;British&quot;,\n    genre: &quot;Mystery&quot;\n  },\n  {\n    _id: ObjectId(&quot;65f300000000000000000002&quot;),\n    name: &quot;Arthur Conan Doyle&quot;,\n    birthYear: 1859,\n    nationality: &quot;British&quot;,\n    genre: &quot;Detective Fiction&quot;\n  },\n  {\n   _id: ObjectId(&quot;65f300000000000000000003&quot;),\n    name: &quot;Dorothy L. Sayers&quot;,\n    birthYear: 1893,\n    nationality: &quot;British&quot;,\n    genre: &quot;Mystery&quot;\n  }\n]\n</code></pre></div></span>\n<span class=\"paragraph\">Books Collection</span>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>[\n  {\n    _id: ObjectId(&quot;65f400000000000000000001&quot;),\n    title: &quot;Murder on the Orient Express&quot;,\n    publishedYear: 1934,\n    authorId: ObjectId(&quot;65f300000000000000000001&quot;),\n    series: &quot;Hercule Poirot&quot;\n  },\n  {\n    _id: ObjectId(&quot;65f400000000000000000002&quot;),\n    title: &quot;And Then There Were None&quot;,\n    publishedYear: 1939,\n    authorId: ObjectId(&quot;65f300000000000000000001&quot;),\n    series: null\n  },\n  {\n    _id: ObjectId(&quot;65f400000000000000000003&quot;),\n    title: &quot;The Hound of the Baskervilles&quot;,\n    publishedYear: 1902,\n    authorId: ObjectId(&quot;65f300000000000000000002&quot;),\n    series: &quot;Sherlock Holmes&quot;\n  },\n  {\n    _id: ObjectId(&quot;65f400000000000000000004&quot;),\n    title: &quot;The Nine Tailors&quot;,\n    publishedYear: 1934,\n    authorId: ObjectId(&quot;65f300000000000000000003&quot;),\n    series: &quot;Lord Peter Wimsey&quot;\n  }\n]\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "bcd65f1002d17449c14fb2f374045a6a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><table>\n<thead>\n<tr>\n<th>author_id</th>\n<th>name</th>\n<th>birth_year</th>\n<th>nationality</th>\n<th>genre</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td>Agatha Christie</td>\n<td>1890</td>\n<td>British</td>\n<td>Mystery</td>\n</tr>\n<tr>\n<td>2</td>\n<td>Arthur Conan Doyle</td>\n<td>1859</td>\n<td>British</td>\n<td>Detective Fiction</td>\n</tr>\n<tr>\n<td>3</td>\n<td>Dorothy L. Sayers</td>\n<td>1893</td>\n<td>British</td>\n<td>Mystery</td>\n</tr>\n</tbody>\n</table>\n<span class=\"paragraph\">Primary Key: author_id</span>\n<h2 id=\"books-table\">books table</h2>\n<table>\n<thead>\n<tr>\n<th>book_id</th>\n<th>title</th>\n<th>published_year</th>\n<th>author_id</th>\n<th>series</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td>Murder on the Orient Express</td>\n<td>1934</td>\n<td>1</td>\n<td>Hercule Poirot</td>\n</tr>\n<tr>\n<td>2</td>\n<td>And Then There Were None</td>\n<td>1939</td>\n<td>1</td>\n<td>NULL</td>\n</tr>\n<tr>\n<td>3</td>\n<td>The Hound of the Baskervilles</td>\n<td>1902</td>\n<td>2</td>\n<td>Sherlock Holmes</td>\n</tr>\n<tr>\n<td>4</td>\n<td>The Nine Tailors</td>\n<td>1934</td>\n<td>3</td>\n<td>Lord Peter Wimsey</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "26199ae31941aba48e748193c48fa080",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"document-embedding\">Document embedding</h3>\n<span class=\"paragraph\">One of the nice features of mongodb and document store databases, is that there is another way to do this: document embedding</span>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>[\n  {\n    _id: ObjectId(&quot;65f300000000000000000001&quot;),\n    name: &quot;Agatha Christie&quot;,\n    birthYear: 1890,\n    nationality: &quot;British&quot;,\n    genre: &quot;Mystery&quot;,\n    books: [\n      {\n        title: &quot;Murder on the Orient Express&quot;,\n        publishedYear: 1934,\n        series: &quot;Hercule Poirot&quot;\n      },\n      {\n        title: &quot;And Then There Were None&quot;,\n        publishedYear: 1939,\n        series: null\n      }\n    ]\n  },\n  {\n    _id: ObjectId(&quot;65f300000000000000000002&quot;),\n    name: &quot;Arthur Conan Doyle&quot;,\n    birthYear: 1859,\n    nationality: &quot;British&quot;,\n    genre: &quot;Detective Fiction&quot;,\n    books: [\n      {\n        title: &quot;The Hound of the Baskervilles&quot;,\n        publishedYear: 1902,\n        series: &quot;Sherlock Holmes&quot;\n      }\n    ]\n  },\n  {\n    _id: ObjectId(&quot;65f300000000000000000003&quot;),\n    name: &quot;Dorothy L. Sayers&quot;,\n    birthYear: 1893,\n    nationality: &quot;British&quot;,\n    genre: &quot;Mystery&quot;,\n    books: [\n      {\n        title: &quot;The Nine Tailors&quot;,\n        publishedYear: 1934,\n        series: &quot;Lord Peter Wimsey&quot;\n      }\n    ]\n  }\n]\n</code></pre></div>\n<span class=\"paragraph\">What's nice about this is that I can get all the data in a single database read.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "9ba47f0c13949c1208a96a5d780ddcd8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"genre-as-top-level\">Genre as top level</h3>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>[\n  {\n    _id: ObjectId(&quot;65f500000000000000000001&quot;),\n    genre: &quot;Mystery&quot;,\n    authors: [\n      {\n        name: &quot;Agatha Christie&quot;,\n        birthYear: 1890,\n        nationality: &quot;British&quot;,\n        books: [\n          {\n            title: &quot;Murder on the Orient Express&quot;,\n            publishedYear: 1934,\n            series: &quot;Hercule Poirot&quot;\n          },\n          {\n            title: &quot;And Then There Were None&quot;,\n            publishedYear: 1939,\n            series: null\n          }\n        ]\n      },\n      {\n        name: &quot;Dorothy L. Sayers&quot;,\n        birthYear: 1893,\n        nationality: &quot;British&quot;,\n        books: [\n          {\n            title: &quot;The Nine Tailors&quot;,\n            publishedYear: 1934,\n            series: &quot;Lord Peter Wimsey&quot;\n          }\n        ]\n      }\n    ]\n  },\n  {\n    _id: ObjectId(&quot;65f500000000000000000002&quot;),\n    genre: &quot;Detective Fiction&quot;,\n    authors: [\n      {\n        name: &quot;Arthur Conan Doyle&quot;,\n        birthYear: 1859,\n        nationality: &quot;British&quot;,\n        books: [\n          {\n            title: &quot;The Hound of the Baskervilles&quot;,\n            publishedYear: 1902,\n            series: &quot;Sherlock Holmes&quot;\n          }\n        ]\n      }\n    ]\n  }\n]\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "e02c933cf3013f559279851ac8dfdf59",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"analyzing-the-collection\">analyzing the collection</h3>\n<ol>\n<li>it contains all of the same information, just organized differently</li>\n<li>genre is the top level document</li>\n<li>each document has a list of embedded author documents</li>\n<li>each embedded author document has a list of embedded book documents.</li>\n</ol>\n<span class=\"paragraph\">Takeaway:</span>\n<ol>\n<li>I can organize my data any way I want</li>\n<li>Not bound by context free rules</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "c29f9aee22752c75bb89ff62ab535ef9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"data-modeling-and-access-patterns\">Data Modeling and Access Patterns</h3>\n<span class=\"paragraph\">How do you know which way of organizing your data you should choose?</span>\n<span class=\"paragraph\">First, you have to determine if you are going to associate data by reference or by document embedding</span>\n<ol>\n<li>\n<span class=\"paragraph\"><strong>When By reference is better</strong></span>\n<ul>\n<li>The data is huge: Embedding would push the document past the 16MB limit.</li>\n<li>Many-to-Many relationships: Many students are enrolled in many courses. Referencing prevents you from duplicating the entire course description inside every student's document.</li>\n<li>Frequent updates: If you change a \"Course Description,\" you only want to change it in one place rather than updating 500 student records.</li>\n<li>Data is accessed independently: You often need to query \"Courses\" on their own without needing student details.</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\"><strong>When embedding is better</strong></span>\n<ul>\n<li>The data is \"contained\": The information is a natural part of the main document (e.g., a user's address or preferences).</li>\n<li>You need high performance: You want to retrieve everything in one disk seek without joining data.</li>\n<li>Data is mostly static: The information doesn't change often, or if it does, it only changes in the context of that one document.</li>\n<li>One-to-Few relationships: A student has 3\u20135 phone numbers.</li>\n</ul>\n</li>\n</ol>\n<span class=\"paragraph\">So, if I\u2019m going to embed, how do I know what to embed in what?</span>\n<ol>\n<li>what is the governing entity?</li>\n<li>use a variation of the \"value by\" construct we used in dimensional modeling. For example, \"I want books by author\". In this case author is the governing entity and books would be embedded in author documents.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "de88b1465469472ce6e6c1ea5bc8a037",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"converting-relational-data-to-document-data\">converting relational data to document data</h3>\n<span class=\"paragraph\">Converting relational data to document data is done in three fairly straightforward steps.</span>\n<ol>\n<li>Define the document model. Create a document schema or even a sample document</li>\n<li>Map the relational tables and columns to the document model</li>\n<li>Develop a pipeline to convert the data</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "f989d5932221ca1ea27302b0d309f6fa",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"the-relational-model\">the relational model</h3>\n<table>\n<thead>\n<tr>\n<th>author_id</th>\n<th>name</th>\n<th>birth_year</th>\n<th>nationality</th>\n<th>genre</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td>Agatha Christie</td>\n<td>1890</td>\n<td>British</td>\n<td>Mystery</td>\n</tr>\n<tr>\n<td>2</td>\n<td>Arthur Conan Doyle</td>\n<td>1859</td>\n<td>British</td>\n<td>Detective Fiction</td>\n</tr>\n<tr>\n<td>3</td>\n<td>Dorothy L. Sayers</td>\n<td>1893</td>\n<td>British</td>\n<td>Mystery</td>\n</tr>\n</tbody>\n</table>\n<span class=\"paragraph\">Primary Key: author_id</span>\n<h2 id=\"books-table\">books table</h2>\n<table>\n<thead>\n<tr>\n<th>book_id</th>\n<th>title</th>\n<th>published_year</th>\n<th>author_id</th>\n<th>series</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td>Murder on the Orient Express</td>\n<td>1934</td>\n<td>1</td>\n<td>Hercule Poirot</td>\n</tr>\n<tr>\n<td>2</td>\n<td>And Then There Were None</td>\n<td>1939</td>\n<td>1</td>\n<td>NULL</td>\n</tr>\n<tr>\n<td>3</td>\n<td>The Hound of the Baskervilles</td>\n<td>1902</td>\n<td>2</td>\n<td>Sherlock Holmes</td>\n</tr>\n<tr>\n<td>4</td>\n<td>The Nine Tailors</td>\n<td>1934</td>\n<td>3</td>\n<td>Lord Peter Wimsey</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "3c59c73ee589da9a74e7a0ffcee1e103",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"step-1-define-the-document-schema\">Step #1: define the document schema</h3>\n<span class=\"paragraph\">(assuming embedded documents where author is top level and books are embedded)</span>\n<span class=\"paragraph\">This is just like defining a schema for any other type of database. You design what the data is going to look like. In this example, I come up with this. This is the template for what a document looks like.</span>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>{\n  &quot;_id&quot;: ObjectId(),\n  &quot;name&quot;: String,\n  &quot;birthYear&quot;: NumberInt,\n  &quot;nationality&quot;: String,\n  &quot;genre&quot;: String,\n  &quot;books&quot;: [\n    {\n      &quot;title&quot;: String,\n      &quot;publishedYear&quot;: NumberInt,\n      &quot;series&quot;: String // or null\n    }\n  ]\n}\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "59f37861f1dccf3477eb8066d5cee18b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"step-2-the-mapping-document\">Step #2: The mapping document</h3>\n<span class=\"paragraph\">The mapping docuemtn has 4 columns:</span>\n<ol>\n<li>source table</li>\n<li>source field</li>\n<li>destination path</li>\n<li>transformation rule</li>\n</ol>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Source Table</th>\n<th style=\"text-align: left;\">Source Field</th>\n<th style=\"text-align: left;\">Destination Path (BSON)</th>\n<th style=\"text-align: left;\">Transformation Rule</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>Authors</strong></td>\n<td style=\"text-align: left;\"><code>author_id</code></td>\n<td style=\"text-align: left;\"><code>_id</code></td>\n<td style=\"text-align: left;\">Wrap in <code>ObjectId()</code></td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Authors</strong></td>\n<td style=\"text-align: left;\"><code>name</code></td>\n<td style=\"text-align: left;\"><code>name</code></td>\n<td style=\"text-align: left;\">Direct copy (String)</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Authors</strong></td>\n<td style=\"text-align: left;\"><code>birth_year</code></td>\n<td style=\"text-align: left;\"><code>birthYear</code></td>\n<td style=\"text-align: left;\">Cast to <code>NumberInt()</code></td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Authors</strong></td>\n<td style=\"text-align: left;\"><code>nationality</code></td>\n<td style=\"text-align: left;\"><code>nationality</code></td>\n<td style=\"text-align: left;\">Direct copy (String)</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Authors</strong></td>\n<td style=\"text-align: left;\"><code>genre</code></td>\n<td style=\"text-align: left;\"><code>genre</code></td>\n<td style=\"text-align: left;\">Direct copy (String)</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Books</strong></td>\n<td style=\"text-align: left;\"><code>title</code></td>\n<td style=\"text-align: left;\"><code>books.title</code></td>\n<td style=\"text-align: left;\">Push to nested array</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Books</strong></td>\n<td style=\"text-align: left;\"><code>pub_year</code></td>\n<td style=\"text-align: left;\"><code>books.publishedYear</code></td>\n<td style=\"text-align: left;\">Cast to <code>NumberInt()</code></td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Books</strong></td>\n<td style=\"text-align: left;\"><code>series_name</code></td>\n<td style=\"text-align: left;\"><code>books.series</code></td>\n<td style=\"text-align: left;\">Map <code>\"\"</code> to <code>null</code></td>\n</tr>\n</tbody>\n</table>\n<span class=\"paragraph\"><strong><em>Note: embedded documents use dot notation: sub-document.field</em></strong></span>\n<span class=\"paragraph\">This is what you build to define how data from the relational table is mapped to the document schema.</span>\n<span class=\"paragraph\">Now, anyone can look at this and not only understand how the data maps, but also do the actual transformaion</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "39d3fe19c3daf2edbfbdf4e9fa619234",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"step-3-implement-the-transformation-rules\">Step #3: implement the transformation rules.</h3></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "774db1fd868d2f2a53ec79a53ca6d52f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"deeper-dive-into-vector-databases-lancedb\">Deeper Dive into vector databases: lancedb</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "4f442f070e6f88c2bffdbac044444221",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"what-is-a-vector-database\">What is a vector database?</h3>\n<span class=\"paragraph\"><em>A vector database stores information as mathematical representations called vectors, which capture the semantic meaning and relationships between different pieces of data like text, images, or audio. Instead of searching for exact keyword matches like traditional databases, it finds similar or related content by comparing these mathematical patterns that represent semantic meaning. This makes it particularly useful for AI applications like chatbots that need to understand context and find relevant information based on meaning rather than just matching words.</em></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "48aaa066e63ac3a61ffc5f24d7f59334",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"what-is-a-vector\">What is a vector?</h3>\n<span class=\"paragraph\">A vector is like a line in the cartesian coordinate system - just as you might have (x, y) coordinates on a 2D graph, a vector represents data as coordinates in a much higher-dimensional space, sometimes with hundreds or thousands of dimensions. Instead of representing position on a map, these coordinates capture the semantic meaning of data, allowing computers to determine how similar two pieces of information are by mathematically calculating how close their vectors are to each other in vector space. The closer the vectors, the closer the closer the meaning.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "a031410b2a462c7a46a5b8da558cc0d2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"visual-representation\">Visual representation</h3>\n<span class=\"paragraph\">This is a simple visual representation of what embeddings look like. I have three statements, each one about peach cobbler.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "2c2f61617281a5e4a791602fc28cb4f8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"interpreting-the-vectors\">interpreting the vectors</h3>\n<span class=\"paragraph\">This is a simple visual representation of what embeddings look like. I have three statements, each one about peach cobbler.</span>\n<ol>\n<li>Peach cobbler is awesome!</li>\n<li>I really like peach cobber!</li>\n<li>peach cobbler is OK, but I prefer blueberry</li>\n</ol>\n<span class=\"paragraph\">They all indicate a liking for peach cobbler, but which 2 are closest in meaning? Obvious answer is 1 and 2</span>\n<span class=\"paragraph\">This is represented visually in how the blue and red lines are closer to each other than either of them is to the green line.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "d497f439206ea83e5f88c515f1b15000",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"why-is-this-useful\">Why is this useful?</h3>\n<span class=\"paragraph\">Vector databases are used when semantic meaning is the most important consideration. That makes them very useful for things like:</span>\n<ol>\n<li>Chatbots and virtual assistants - Powering conversational AI with semantic understanding</li>\n<li>Semantic search - Understanding query intent and context rather than just keyword matching</li>\n<li>Image and video search - Finding visually similar content (like Pinterest's image recommendations)</li>\n<li>E-commerce product recommendations - Suggesting similar items based on attributes and user behavior</li>\n<li>Healthcare - Patient similarity analysis for treatment recommendations</li>\n<li>Content moderation - flagging inappropriate content</li>\n</ol>\n<span class=\"paragraph\"><strong>EXAMPLE:</strong></span>\n<span class=\"paragraph\">Say you have a database of movies with genres and tags and your question is, \"What comedies do I have?\"</span>\n<span class=\"paragraph\">How do you do that with a relational database?</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wlCL",
+      "code_hash": "a8db4cf15ccdf524bc813cac3a8d5a81",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"weekly-assignment\">Weekly Assignment</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hbol",
+      "code_hash": "1e88991a0491de78bd1878fe8b40cf9e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "eb3f437e2adcd51e0bc174094f2b0c79",
+      "outputs": [],
+      "console": []
+    }
+  ]
+}
