@@ -110,5 +110,159 @@ def _(sales):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Which branch × product line drives the most revenue?
+    Each branch stocks all six product lines, but do certain categories dominate at specific locations?
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Revenue
+    """)
+    return
+
+
+@app.cell
+def _(sales):
+    branch_product = (
+        sales.groupby(["Branch", "Product line"])["Total"]
+        .agg(Total_Revenue="sum", Avg_Transaction="mean", Num_Transactions="count")
+        .round(2)
+    )
+    branch_product
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Branch Level
+    """)
+    return
+
+
+@app.cell
+def _(sales):
+    branch_summary = (
+        sales.groupby("Branch")[["Total", "gross income", "Rating"]]
+        .agg({"Total": "sum", "gross income": "sum", "Rating": "mean"})
+        .round(2)
+    )
+    branch_summary
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Numeric summary of key financial + rating columns
+    """)
+    return
+
+
+@app.cell
+def _(sales):
+    sales[["Unit price", "Quantity", "Total", "gross income", "Rating"]].describe().round(2)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    How many transactions per product line?
+    """)
+    return
+
+
+@app.cell
+def _(sales):
+    sales["Product line"].value_counts()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Key Findings
+
+    Branch C's Food & Beverages category led all 18 combinations with $23,767 total revenue and the highest average transaction at $360. Branch B's Health & Beauty had the highest per-transaction average ($377) despite fewer transactions.
+
+    Using the describe() function we see a high standard deviation in Total ($246 on a $323 mean) signaling highly variable basket sizes.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ---
+
+    ### Do payment method and customer type influence spending?
+
+    With three payment methods and two customer segments roughly evenly split, we can test whether being a Member or paying by Credit card meaningfully changes how much someone spends per transaction.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Distribution of payment methods and customer types
+    """)
+    return
+
+
+@app.cell
+def _(sales):
+    sales["Payment"].value_counts()
+
+
+    return
+
+
+@app.cell
+def _(sales):
+    sales["Customer type"].value_counts()
+
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Spending statistics by Payment × Customer Type
+    """)
+    return
+
+
+@app.cell
+def _(sales):
+    pay_cust = (
+        sales.groupby(["Payment", "Customer type"])["Total"]
+        .describe()
+        .round(2)[["count", "mean", "50%", "max"]]
+    )
+    pay_cust.columns = ["Transactions", "Avg Spend", "Median Spend", "Max Spend"]
+    pay_cust
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Key Findings
+
+    Credit card Members have the highest average spend ($335.88), but differences across all six segments are small, only a $26 spread between the highest and lowest group average. Normal credit card users have a notably low median ($202.82 vs $275 for Members), suggesting they cluster around smaller purchases.
+
+    USing value_counts() we see payment methods are nearly equally distributed (Ewallet 345, Cash 344, Credit card 311) and customer types are almost perfectly split (501 Members vs 499 Normal). This balance means any spending differences are genuinely behavioral, not unequal group sizes.
+    """)
+    return
+
+
 if __name__ == "__main__":
     app.run()

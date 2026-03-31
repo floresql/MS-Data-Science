@@ -1,14 +1,10 @@
 [project]
-name = "msds650"
+name = "msds650-data-analytics"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "jinja2>=3.1.6",
-    "marimo>=0.20.4",
-    "matplotlib>=3.10.8",
-    "pandas>=2.3.3",
-    "plotly>=6.6.0",
+    "marimo[recommended]>=0.21.1",
     "pyzmq>=27.1.0",
 ]
