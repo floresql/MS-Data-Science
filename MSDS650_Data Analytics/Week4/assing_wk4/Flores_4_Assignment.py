@@ -706,7 +706,62 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
- 
+    ---
+
+    ## References
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Anthropic. (2026, March 21). *Hypothesis testing concepts and examples*
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Generative AI chat]. Claude Sonnet 4.6. https://claude.ai/share/37b7c11c-6f3b-45cb-aea5-a236a40da68b
+
+    &nbsp;
+
+    ---
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Appendix: AI-Generated Content
+
+    **Tool:** Claude Sonnet 4.6 (Anthropic)
+    **Date:** March 21, 2026
+    **Topic:** Pandas Data Analysis Techniques
+
+
+    ### Prompt Submitted to AI:
+
+    Could you make me a list of the concepts in  the 4_hypothesis_testing.py file and describe what each one is used for and how it works? put them in numerical order. provide the results in a markdown file with code windows for example code snippets when appropriate
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### AI Response Summary:
+
+    The markdown file covers all 15 concepts from the notebook in the order they appear. Here is a quick overview of what is included:
+
+    1-2: Foundations -- descriptive vs. inferential statistics, and sampling techniques
+
+    3-5: Hypothesis setup -- null/alternative hypotheses, Type I/II errors, and alpha/p-value decision rules
+
+    6: Normality testing -- histograms, Q-Q plots, and the Shapiro-Wilk test
+
+    7-11: The five hypothesis tests demonstrated -- one-sample t-test, paired t-test, two-sample t-test, one-sample z-test, and two-sample z-test
+
+    12-14: Applied data skills -- subsetting groups for comparison, cleaning string data, and doing exploratory stats before formal testing
+
+    15: Degrees of freedom and when t-tests and z-tests converge
     """)
     return
 
