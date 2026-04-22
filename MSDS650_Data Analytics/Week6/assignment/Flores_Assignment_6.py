@@ -334,5 +334,62 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ---
+
+    ## References
+
+    Anthropic. (2026, April 19). *Unsupervised Machine Learning Concepts Guide*
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Generative AI chat]. Claude Sonnet 4.6. https://claude.ai/share/19bb28ef-a549-4d10-ad4e-5233316bf091
+
+    &nbsp;
+
+    ---
+
+    ## Appendix: AI-Generated Content
+
+    **Tool:** Claude Sonnet 4.6 (Anthropic)
+    **Date:** April 19, 2026
+    **Topic:** Supervised Machine Learning Concepts
+
+    ---
+
+    ### Prompt Submitted to AI:
+
+    Could you make me a list of the concepts in  the 6_unsupervised_machine_learning.py
+    file and describe what each one is used for and how it works? put them in numerical
+    order. provide the results in a Marimo style file with code windows for example code
+    snippets when appropriate. the format should be markdown window describing the concept,
+    code window with the code, and a markdown window explaining results and what the code
+    is doing.
+
+    ---
+
+    ### Full-Text AI Response:
+
+    Here is a summary of the 11 concepts covered, in the order they appear in the file::
+
+    | # | Concept | Key Tool / Function |
+    |:-:|:--------|:--------------------|
+    | 1 | Supervised vs. Unsupervised Learning | conceptual framing |
+    | 2 | K-Means Clustering | `KMeans`, `fit_predict`, `cluster_centers_` |
+    | 3 | Silhouette Score | `silhouette_score` |
+    | 4 | Synthetic Data with `make_blobs` | `make_blobs` |
+    | 5 | Predicting Cluster Membership | `.predict()`, `.labels_`, `.reshape(1,-1)` |
+    | 6 | Data Cleaning for ML | `.drop()`, `.replace()`, `.astype()` |
+    | 7 | Scree Plot / Elbow Method | `inertia_`, matplotlib line plot |
+    | 8 | Silhouette Score Loop for k Selection | `metrics.silhouette_score` in a for-loop |
+    | 9 | PCA -- Dimensionality Reduction | `PCA`, `fit_transform`, `explained_variance_ratio_` |
+    | 10 | User-Defined Functions (UDFs) | `def`, reusable helper functions |
+    | 11 | Color Quantization (K-Means on Images) | `KMeans` + UDFs on pixel arrays |
+
+    The full detailed response is contained in the reference link.
+    """)
+    return
+
+
 if __name__ == "__main__":
     app.run()
